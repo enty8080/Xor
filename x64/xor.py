@@ -31,4 +31,4 @@ class HatSploitEncoder(Encoder, EncoderTools):
 
     def run(self):
         key = self.parse_options(self.options)
-        return self.encode_shellcode('x64', 'xor', self.payload, key)
+        count = - int(((len(self.payload - 1) / len(key)) + 1)
