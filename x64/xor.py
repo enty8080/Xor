@@ -25,14 +25,20 @@ class HatSploitEncoder(Encoder, EncoderTools):
     options = {
         'KEY': {
             'Description': "8-byte key to encode.",
-            'Value': 'P@ssW0rd',
+            'Value': "P@ssW0rd",
             'Type': None,
+            'Required': True
+        },
+        'ITERS': {
+            'Description': "Encryption iterations.",
+            'Value': 1,
+            'Type': "integer",
             'Required': True
         }
     }
 
     def run(self):
-        key = self.parse_options(self.options)
+        key, iterations = self.parse_options(self.options)
         count = - int(((len(self.payload - 1) / len(key)) + 1)
 
         decoder = (
@@ -48,5 +54,5 @@ class HatSploitEncoder(Encoder, EncoderTools):
         return self.encode(
             self.details['Architecture'],
             self.payload,
-            decoder, key
+            decoder, key, iterations
         )
