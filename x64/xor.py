@@ -32,3 +32,19 @@ class HatSploitEncoder(Encoder, EncoderTools):
     def run(self):
         key = self.parse_options(self.options)
         count = - int(((len(self.payload - 1) / len(key)) + 1)
+
+        decoder = (
+            b"\x48\x31\xc9"
+            b"\x48\x81\xe9" + struct.pack('i', key)
+            b"\x48\x8d\x05\xef\xff\xff\xff"
+            b"\x48\xbb" + key.encode()
+            b"\x48\x31\x58\x27"
+            b"\x48\x2d\xf8\xff\xff\xff"
+            b"\xe2\xf4"
+        )
+
+        return self.encode(
+            self.details['Architecture'],
+            self.payload,
+            decoder, key
+        )
